@@ -1,0 +1,74 @@
+version: "3"
+
+# service: 実際に起動する書くコンテナを定義する（今回はstrapiとstrapidb）
+services:
+  strapi:
+    container_name: strapi
+    # カレントディレクトリのDockerfileを使い、Dockerイメージをビルドする
+    build: .
+    # Dockerイメージにstrapi:latesという名前とタグをつける
+    image: strapi:latest
+    # コンテナが落ちた時に、手動で停止した場合を除いて再起動する
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_CLIENT: ${DATABASE_CLIENT}
+      # Docker Composeのネットワーク内では、サービス名がそのままホスト名（DNS名）として機能するため、
+      # コンテナ同士がコンテナ名でアクセスできる
+      # ここでは後述のstrapiDBを指定
+      DATABASE_HOST: strapiDB
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      APP_KEYS: ${APP_KEYS}
+      NODE_ENV: ${NODE_ENV}
+    # バインドマウント（同期）の設定
+    # ホストマシンに変更がある場合、コンテナも変更する（逆も然り）
+    volumes:
+      - ./config:/opt/app/config
+      - ./src:/opt/app/src
+      - ./package.json:/opt/package.json
+      - ./package.lock.json:/opt/package.lock.json
+      - ./.env:/opt/app/.env
+      - ./public/uploads:/opt/app/public/uploads
+    ports:
+      - "1337:1337"
+    # 後述のstrapiネットワークに接続
+    networks:
+      - strapi
+    # strapiがstrapiDBに依存する関係性を定義
+    # これにより、strapiDBを起動してからstrapiを起動するようになる
+    depends_on:
+      - strapiDB
+
+  strapiDB:
+    container_name: strapiDB
+    platform: linux/amd64 #for platform error on Apple M1 chips
+    restart: unless-stopped
+    env_file: .env
+    # buildせず、Docker Hubから公式イメージをDLして利用
+    image: postgres:16.0-alpine
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - strapi-data:/var/lib/postgresql/data/ #using a volume
+      #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
+    ports:
+      - "5432:5432"
+    networks:
+      - strapi
+
+# データを永続化するために名前付きボリュームを定義
+volumes:
+  strapi-data:
+
+# コンテナ同士が通信するための専用仮想ネットワークを定義
+networks:
+  strapi:
+    name: Strapi
+    driver: bridge
