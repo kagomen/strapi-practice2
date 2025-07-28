@@ -3,8 +3,10 @@ FROM node:22-alpine
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
 # ARG: イメージをビルドする際に引数を定義できるよう設定（デフォルト値をdevelopmentに設定）
 ARG NODE_ENV=development
+ARG BACKEND_PUBLIC_URL
 # 環境変数を引数に設定できるようにする
 ENV NODE_ENV=${NODE_ENV}
+ENV BACKEND_PUBLIC_URL=${BACKEND_PUBLIC_URL}
 
 # パッケージはキャッシュしたいので、ディレクトリをパッケージ用とアプリ用の二階層に分ける
 # こちらはパッケージ用で、COPY命令時に変更があれば後続のすべてのRUNが実行される

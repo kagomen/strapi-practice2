@@ -1,4 +1,6 @@
+import { Star } from "@strapi/icons"
 import type { StrapiApp } from "@strapi/strapi/admin"
+import "./extensions/custom.css"
 import Logo from "./extensions/logo.jpeg"
 
 export default {
@@ -13,7 +15,7 @@ export default {
       // 'he',
       // 'id',
       // 'it',
-      "ja",
+      // "ja",
       // 'ko',
       // 'ms',
       // 'nl',
@@ -41,6 +43,22 @@ export default {
       favicon: Logo,
     },
   },
+
+  register(app: StrapiApp) {
+    app.widgets.register({
+      icon: Star,
+      title: {
+        id: "my widget title",
+        defaultMessage: "my widget",
+      },
+      component: async () => {
+        const component = await import("./extensions/components/MyWidget")
+        return component.default
+      },
+      id: "my-custom-widget",
+    })
+  },
+
   bootstrap(app: StrapiApp) {
     console.log(app)
   },
