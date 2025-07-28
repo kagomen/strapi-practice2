@@ -48,18 +48,15 @@ export default {
     app.widgets.register({
       icon: Star,
       title: {
-        id: "my widget title",
-        defaultMessage: "my widget",
+        id: "widget title",
       },
       component: async () => {
-        const component = await import("./extensions/components/MyWidget")
+        const component = await import("./extensions/components/CustomWidget")
         return component.default
       },
-      id: "my-custom-widget",
+      id: "custom-widget-id",
     })
   },
 
-  bootstrap(app: StrapiApp) {
-    console.log(app)
-  },
+  bootstrap(app: StrapiApp) {},
 }
