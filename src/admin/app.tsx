@@ -55,7 +55,20 @@ export default {
         return component.default
       },
       id: "custom-widget-id",
-    })
+    }),
+      app.addMenuLink({
+        to: "/hello",
+        icon: Star,
+        intlLabel: {
+          id: "my-plugin.plugin.name",
+          defaultMessage: "My plugin",
+        },
+        permissions: [],
+        Component: async () => {
+          const component = await import("./extensions/components/CustomMenu")
+          return { default: component.default }
+        },
+      })
   },
 
   bootstrap(app: StrapiApp) {},
