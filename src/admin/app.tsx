@@ -1,5 +1,6 @@
 import { Star } from "@strapi/icons"
 import type { StrapiApp } from "@strapi/strapi/admin"
+import PreviewLink from "./extensions/components/PreviewLink"
 import "./extensions/custom.css"
 import Logo from "./extensions/logo.jpeg"
 
@@ -55,21 +56,30 @@ export default {
         return component.default
       },
       id: "custom-widget-id",
-    }),
-      app.addMenuLink({
-        to: "/hello",
-        icon: Star,
-        intlLabel: {
-          id: "my-plugin.plugin.name",
-          defaultMessage: "My plugin",
-        },
-        permissions: [],
-        Component: async () => {
-          const component = await import("./extensions/components/CustomMenu")
-          return { default: component.default }
-        },
-      })
+    })
+
+    app.addMenuLink({
+      to: "/hello",
+      icon: Star,
+      intlLabel: {
+        id: "my-plugin.plugin.name",
+        defaultMessage: "My plugin",
+      },
+      permissions: [],
+      Component: async () => {
+        const component = await import("./extensions/components/CustomMenu")
+        return { default: component.default }
+      },
+    })
   },
 
-  bootstrap(app: StrapiApp) {},
+  bootstrap(app: StrapiApp) {
+    app
+      .getPlugin("content-manager")
+      // プレビューボタン
+      .injectComponent("editView", "right-links", {
+        name: "preview-link",
+        Component: PreviewLink,
+      })
+  },
 }
