@@ -6,34 +6,6 @@ import Logo from "./extensions/logo.jpeg"
 
 export default {
   config: {
-    locales: [
-      // 'ar',
-      // 'fr',
-      // 'cs',
-      // 'de',
-      // 'dk',
-      // 'es',
-      // 'he',
-      // 'id',
-      // 'it',
-      // "ja",
-      // 'ko',
-      // 'ms',
-      // 'nl',
-      // 'no',
-      // 'pl',
-      // 'pt-BR',
-      // 'pt',
-      // 'ru',
-      // 'sk',
-      // 'sv',
-      // 'th',
-      // 'tr',
-      // 'uk',
-      // 'vi',
-      // 'zh-Hans',
-      // 'zh',
-    ],
     auth: {
       logo: Logo,
     },
@@ -42,6 +14,30 @@ export default {
     },
     head: {
       favicon: Logo,
+    },
+    locales: ["ja", "en"],
+    translations: {
+      ja: {
+        // =========== ホーム===========
+        "global.home": "ホーム",
+        "HomePage.header.title": "こんにちは {name} 👋",
+        "HomePage.header.subtitle": "ここは管理画面です。",
+        // =========== コンテンツマネージャ ===========
+        "content-manager.plugin.name": "コンテンツ管理",
+        "content-manager.header.name": "コンテンツ管理",
+        "content-manager.HeaderLayout.button.label-add-entry": "新規作成",
+        // タブ
+        "content-manager.containers.edit.tabs.draft": "下書き",
+        "content-manager.containers.edit.tabs.published": "公開済み",
+        // タグ
+        "content-manager.containers.List.draft": "下書き",
+        "content-manager.containers.List.published": "公開済み",
+        // ボタン
+        "app.utils.publish": "公開する",
+        "global.save": "保存する",
+        // ========== 設定 ===========
+        "global.settings": "設定",
+      },
     },
   },
 
