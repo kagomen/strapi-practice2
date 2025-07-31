@@ -1,0 +1,12 @@
+{
+  "name": "Strapi Dev Container",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "strapi",
+  "workspaceFolder": "/opt/app",
+  "remoteUser": "root",
+  "customizations": {
+    "vscode": {
+      "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+    }
+  }
+}

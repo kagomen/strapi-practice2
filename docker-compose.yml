@@ -1,5 +1,3 @@
-version: "3"
-
 # service: 実際に起動する書くコンテナを定義する（今回はstrapiとstrapidb）
 services:
   strapi:
