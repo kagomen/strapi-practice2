@@ -29,6 +29,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "patch-package": "^8.0.0",
     "typescript": "^5"
   },
   "engines": {
@@ -38,5 +39,8 @@
   "strapi": {
     "uuid": "2904ea64-7262-45de-b86e-1f4785043daf",
     "installId": "36213dd21792fc6a36360540e5db4008489f68818480e1dae584e60397005c6c"
+  },
+  "patch-package": {
+    "patchDir": "app/patches"
   }
 }

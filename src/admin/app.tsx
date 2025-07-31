@@ -20,7 +20,7 @@ export default {
       ja: {
         // =========== ホーム===========
         "global.home": "ホーム",
-        "HomePage.header.title": "ハロー {name} 👋",
+        "HomePage.header.title": "こんにちは {name} 👋",
         "HomePage.header.subtitle": "ここは管理画面です。",
         // =========== コンテンツマネージャ ===========
         "content-manager.plugin.name": "コンテンツ管理",
